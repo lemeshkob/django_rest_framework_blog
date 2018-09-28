@@ -1,5 +1,4 @@
 from rest_framework import generics
-from rest_framework.decorators import permission_classes
 from rest_framework import permissions
 from .models import Post
 from django.contrib.auth.models import User
