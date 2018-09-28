@@ -9,9 +9,9 @@ from .permissions import IsOwnerOrReadOnly
 
 class PostList(generics.ListCreateAPIView):
     """
-    Post list display class
-    Allows to retrieve all Post objects and crete one
-    permissions_classes - classes which are operating the permissions of post object (owner or not)
+    BlogPost list display class
+    Allows to retrieve all BlogPost objects and crete one
+    permissions_classes - classes which are operating the permissions of BlogPost object (owner or not)
     queryset - queryset to all user objects
     serializer_class - serializer class that class uses for view
     """
@@ -28,9 +28,9 @@ class PostList(generics.ListCreateAPIView):
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    PostDetail class allows ro Retrieve Update Destroy single Post object
-    permissions_classes - classes which are operating the permissions of post object (owner or not)
-    queryset - queryset to all post objects
+    BlogPostDetail class allows ro Retrieve Update Destroy single BlogPost object
+    permissions_classes - classes which are operating the permissions of BlogPost object (owner or not)
+    queryset - queryset to all BlogPost objects
     serializer_class - serializer class that class uses for view
     """
     permission_classes = (

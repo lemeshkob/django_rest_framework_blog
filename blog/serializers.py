@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class PostSerializer(serializers.ModelSerializer):
     """
-    Post serializer
+    BlogPost serializer
     Serializes/Deserializes model fields to JSON or vice versa
     owner - ReadOnlyField of the userObject
     """
@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
     """
     User serializer
     Serializes/Deserializes model fields to JSON or vice versa
-    posts - All users' posts
+    BlogPosts - All users' BlogPosts
     """
 
     posts = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
