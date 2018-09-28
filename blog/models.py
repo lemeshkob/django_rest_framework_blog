@@ -3,6 +3,14 @@ from django.db import models
 
 class Post(models.Model):
 
+    """
+    Post model created for the DRF demo project
+    title (str) - Post title
+    content (str) - Post content
+    created (dateTime) - Creation dateTime stamp
+    owner (foreignKey) - Owner of the post (userObject)
+    """
+
     class Meta:
         db_table = 'posts'
 
