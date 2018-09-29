@@ -3,7 +3,7 @@ from .models import Post
 from django.contrib.auth.models import User
 
 
-class PostSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.HyperlinkedModelSerializer):
     """
     BlogPost serializer
     Serializes/Deserializes model fields to JSON or vice versa
@@ -14,18 +14,18 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'content', 'created', 'owner')
+        fields = ('url', 'id', 'title', 'content', 'created', 'owner')
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     """
     User serializer
     Serializes/Deserializes model fields to JSON or vice versa
     BlogPosts - All users' BlogPosts
     """
 
-    posts = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
+    posts = serializers.HyperlinkedRelatedField(many=True, view_name='post-detail', read_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'posts')
+        fields = ('url', 'id', 'username', 'posts')
