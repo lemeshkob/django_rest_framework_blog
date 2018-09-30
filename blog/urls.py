@@ -1,15 +1,16 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from blog import views
+from rest_framework.schemas import get_schema_view
 
-"""
-urlpatterns - stores url to views 
-"""
+schema_view = get_schema_view(title='Blog API')
+
 
 urlpatterns = [
-    path('', views.api_root),
-    path('posts/', views.PostList.as_view(), name='post-list'),
-    path('posts/<int:pk>', views.PostDetail.as_view(), name='post-detail'),
+    path('api-root/', views.api_root, name='home'),
+    path('schema/', schema_view),
+    path('', views.PostList.as_view(), name='post-list'),
+    path('<int:pk>/', views.PostDetail.as_view(), name='post-detail'),
     path('users/', views.UserList.as_view(), name='user-list'),
     path('users/<int:pk>', views.UserDetail.as_view(), name='user-detail'),
 ]

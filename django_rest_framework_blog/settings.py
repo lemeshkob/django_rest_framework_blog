@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
+STATIC_URL = '/static/'
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -47,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'blog.apps.BlogConfig'
+    'blog.apps.BlogConfig',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [
