@@ -1,7 +1,7 @@
 from rest_framework import permissions, generics
-from .models import Post
+from .models import Post, Comment
 from django.contrib.auth.models import User
-from .serializers import PostSerializer, UserSerializer
+from .serializers import PostSerializer, UserSerializer, CommentSerializer
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.views import APIView
 from rest_framework import status
+from django.shortcuts import render
 
 
 @api_view(['GET'])
@@ -33,11 +34,6 @@ class PostList(generics.ListCreateAPIView):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
-    renderer_classes = (TemplateHTMLRenderer,)
-
-    def get(self, request, *args, **kwargs):
-        return Response({'posts': self.get_queryset().order_by('title')}, template_name='posts/posts.html')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -68,11 +64,6 @@ class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    renderer_classes = (TemplateHTMLRenderer,)
-
-    def get(self, request, *args, **kwargs):
-        return Response({'users': self.get_queryset().order_by('username')}, template_name='users/users.html')
-
 
 class UserDetail(generics.RetrieveAPIView):
     """
@@ -82,3 +73,30 @@ class UserDetail(generics.RetrieveAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class CommentList(generics.ListCreateAPIView):
+
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+    )
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+    )
+
+
+def posts_view(request):
+    return render(request, 'posts/posts.html')
