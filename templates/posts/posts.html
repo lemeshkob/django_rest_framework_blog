@@ -1,21 +1,13 @@
-    <script>
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', '{% url "post-detail" 1%}', true, 'admin', 'Qwe123qwe');
-
-    xhr.send(); // (1)
-
-    xhr.onreadystatechange = function() { // (3)
-        if (xhr.readyState != 4) return;
-
-        if (xhr.status != 200) {
-        alert(xhr.status + ': ' + xhr.statusText);
-        } else {
-        alert(xhr.responseText);
-        }
-
-    }
-    </script>
+{% extends 'layout.html' %}
+{% block content %}
+    {% for post in posts %}
+      <div class="col-md-4">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }} </p>
+        <p><a class="btn btn-secondary" href="{% url 'post-detail' post.id %}" role="button">View details &raquo;</a></p>
+      </div>
+    {% endfor %}
+{% endblock %}
 
 
 
